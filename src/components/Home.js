@@ -11,7 +11,7 @@ class Home extends Component {
         if (this.props.movies.length > 0) {
             return this.props.movies.map(movie => {
                 return (
-                    <Movie title={movie.title} director={movie.director} id={movie.id} />
+                    <Movie deleteMovie={this.props.deleteMovie} movie={movie} />
                 )
             })
         }

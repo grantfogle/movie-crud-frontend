@@ -5,6 +5,7 @@ import './App.css';
 import Home from './components/Home';
 import Header from './components/Header';
 import ShowMovie from './components/ShowMovie';
+import NewMovieForm from './components/NewMovieForm';
 
 const Code = () => {
   return (
@@ -32,6 +33,7 @@ class App extends Component {
     super(props)
     this.state = {
       movies: '',
+      showForm: false
     }
   }
   //ajax call
@@ -42,16 +44,35 @@ class App extends Component {
     this.setState({ movies: json })
     console.log(this.state.movies)
   }
+  toggleNewMovieForm = () => this.setState({ showForm: !this.state.showForm });
+
+  //Need put and create routes still
+  //Delete Route
+  deleteMovie = (id) => {
+    fetch(`https://movies-crud-backend.herokuapp.com/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json)
+  }
+
+  addMovie = (body) => {
+
+  }
 
   render() {
+    console.log(this.state.showForm)
     return (
       <Router>
         <div>
-          <Header />
+          <Header toggleNewMovieForm={this.toggleNewMovieForm} />
           <div className="container">
+            <div style={{ display: `${this.state.showForm ? 'block' : 'none'}` }}>
+              <NewMovieForm />
+            </div>
+
             {/* Add a header componenet */}
             {/* <MainMenu /> */}
-            <Route exact path="/" component={(props) => <Home movies={this.state.movies} />} />
+            <Route exact path="/" component={(props) => <Home movies={this.state.movies} deleteMovie={this.deleteMovie} />} />
             <Route exact path="/id" component={Code} />
             <Route exact path="/id/:id" component={(props) => {
               return <ShowMovie movies={this.state.movies} {...props} />
@@ -59,7 +80,7 @@ class App extends Component {
           </div>
         </div>
       </Router>
-    );
+    )
   }
 }
 
