@@ -33,31 +33,87 @@ class App extends Component {
     super(props)
     this.state = {
       movies: '',
-      showForm: false
+      showForm: false,
+      title: '',
+      director: '',
+      year: '',
+      rating: '',
+      url: ''
     }
   }
   //ajax call
   async componentDidMount() {
     const proxy = '';
-    const response = await fetch('https://movies-crud-backend.herokuapp.com/')
+    const response = await fetch('http://localhost:3001/')
     const json = await response.json();
     this.setState({ movies: json })
     console.log(this.state.movies)
   }
   toggleNewMovieForm = () => this.setState({ showForm: !this.state.showForm });
 
+  handleInput = (event) => {
+    const { value, name } = event.target;
+    this.setState({ [name]: value })
+    console.log(this.state)
+  }
+
+  submitMovie = () => {
+    let item = {
+      title: this.state.title,
+      director: this.state.director,
+      year: this.state.year,
+      rating: this.state.rating,
+      url: this.state.url
+    }
+    console.log(item)
+    fetch('http://localhost:3001/', {
+      method: 'POST',
+      body: JSON.stringify(item),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const arr = this.state.movies;
+        console.log(data)
+        arr.push(data[0])
+        this.setState({ movies: arr })
+      })
+    // const newMessage = await response.json()
+    // this.setState({ messages: [...this.state.messages, newMessage] })
+  }
+
   //Need put and create routes still
   //Delete Route
   deleteMovie = (id) => {
-    fetch(`https://movies-crud-backend.herokuapp.com/${id}`, {
+    fetch(`http://localhost:3001/${id}`, {
       method: 'DELETE'
     })
-      .then(response => response.json)
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          const array = [...this.state.movies];
+          let index = array.findIndex((movie) => {
+            return movie.id === data[0].id
+          });
+          if (index !== -1) {
+            array.splice(index, 1);
+            this.setState({ movies: array })
+          }
+          // removeThing(e) {
+          //   var array = [...this.state.things]; // make a separate copy of the array
+          //   var index = array.indexOf(e.target.value) // instead of e.target.value you can use id in promise resolution
+          //   if (index !== -1) {
+          //     array.splice(index, 1);
+          //     this.setState({things: array});
+          //   }
+          // },
+        }
+      })
   }
 
-  addMovie = (body) => {
-
-  }
 
   render() {
     console.log(this.state.showForm)
@@ -67,7 +123,7 @@ class App extends Component {
           <Header toggleNewMovieForm={this.toggleNewMovieForm} />
           <div className="container">
             <div style={{ display: `${this.state.showForm ? 'block' : 'none'}` }}>
-              <NewMovieForm />
+              <NewMovieForm handleInput={this.handleInput} submitMovie={this.submitMovie} />
             </div>
 
             {/* Add a header componenet */}
