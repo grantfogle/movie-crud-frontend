@@ -25,7 +25,7 @@ class ShowMovie extends Component {
         console.log(this.props.movies);
         console.log(this.state.movie);
         return (
-            <div>
+            <div className="">
                 <h2>{this.state.movie.title ? this.state.movie.title : 'cats'}</h2>
                 <p><a href="this.state.movie.url">Visit imdb page</a></p>
                 <form>
@@ -48,7 +48,6 @@ class ShowMovie extends Component {
                     <button className="btn btn-primary" type="submit">Edit Movie</button>
                 </form>
             </div>
-
         )
     }
 }

@@ -6,17 +6,19 @@ const Movie = (props) => {
 
     return (
         <div className="col-md-4 col-sm-6">
-            <div className="card" style={{ height: "18rem", width: "12rem" }}>
+            <div className="card" style={{ height: "18rem", width: "18rem" }}>
                 <img className="card-img-top" src="..." alt="Card image cap" />
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <p className="card-text">{director}</p>
                     <p className="card-text">{rating}/10</p>
                 </div>
-                <Link to={`/id/${id}`}>
-                    <a href="#" className="btn btn-primary">Edit Movie</a>
-                </Link>
-                <button onClick={() => props.deleteMovie(id)} className="btn btn-primary">Delete</button>
+                <div className="movieButtons">
+                    <Link to={`/id/${id}`}>
+                        <a href="#" className="btn btn-primary">Edit Movie</a>
+                    </Link>
+                    <button onClick={() => props.deleteMovie(id)} className="btn btn-primary">Delete Movie</button>
+                </div>
             </div>
         </div>
 

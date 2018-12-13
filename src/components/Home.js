@@ -19,8 +19,10 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="row">
-                {this.getMovies()}
+            <div className="showMovies">
+                <div className="row">
+                    {this.getMovies()}
+                </div>
             </div>
         )
     }

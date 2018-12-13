@@ -22,6 +22,29 @@
   color: #61dafb;
 }
 
+.appBody {
+  background-color: #3498db
+}
+
+.formBody {
+  width: 100%;
+  background-color: #ecf0f1;
+}
+
+.newMovieForm {
+  padding: 2em 0;
+}
+
+.movieButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.showMovies {
+  padding-top: 2em;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

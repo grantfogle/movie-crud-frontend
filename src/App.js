@@ -7,17 +7,9 @@ import Header from './components/Header';
 import ShowMovie from './components/ShowMovie';
 import NewMovieForm from './components/NewMovieForm';
 
-const Code = () => {
-  return (
-    <div>
-      <h2>Code page</h2>
-    </div>
-  )
-}
-
 const MainMenu = () => {
   return (
-    <div>
+    <div className="">
       <Link to="/">
         <button className="btn btn-primary">Home</button>
       </Link>
@@ -119,17 +111,17 @@ class App extends Component {
     console.log(this.state.showForm)
     return (
       <Router>
-        <div>
+        <div className="appBody">
           <Header toggleNewMovieForm={this.toggleNewMovieForm} />
-          <div className="container">
-            <div style={{ display: `${this.state.showForm ? 'block' : 'none'}` }}>
-              <NewMovieForm handleInput={this.handleInput} submitMovie={this.submitMovie} />
-            </div>
 
+          <div style={{ display: `${this.state.showForm ? 'block' : 'none'}` }}>
+            <NewMovieForm handleInput={this.handleInput} submitMovie={this.submitMovie} />
+          </div>
+          <div className="container">
             {/* Add a header componenet */}
             {/* <MainMenu /> */}
             <Route exact path="/" component={(props) => <Home movies={this.state.movies} deleteMovie={this.deleteMovie} />} />
-            <Route exact path="/id" component={Code} />
+            {/* <Route exact path="/id" component={Code} /> */}
             <Route exact path="/id/:id" component={(props) => {
               return <ShowMovie movies={this.state.movies} {...props} />
             }} />
