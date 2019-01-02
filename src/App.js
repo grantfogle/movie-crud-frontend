@@ -94,16 +94,21 @@ class App extends Component {
             array.splice(index, 1);
             this.setState({ movies: array })
           }
-          // removeThing(e) {
-          //   var array = [...this.state.things]; // make a separate copy of the array
-          //   var index = array.indexOf(e.target.value) // instead of e.target.value you can use id in promise resolution
-          //   if (index !== -1) {
-          //     array.splice(index, 1);
-          //     this.setState({things: array});
-          //   }
-          // },
         }
       })
+  }
+
+  editMovie(id, body) {
+    console.log(body)
+    fetch(`http://localhost:3001/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+      .then(response => console.log(response))
   }
 
 
@@ -123,7 +128,7 @@ class App extends Component {
             <Route exact path="/" component={(props) => <Home movies={this.state.movies} deleteMovie={this.deleteMovie} />} />
             {/* <Route exact path="/id" component={Code} /> */}
             <Route exact path="/id/:id" component={(props) => {
-              return <ShowMovie movies={this.state.movies} {...props} />
+              return <ShowMovie movies={this.state.movies} {...props} editMovie={this.editMovie} handleInput={this.handleInput} />
             }} />
           </div>
         </div>

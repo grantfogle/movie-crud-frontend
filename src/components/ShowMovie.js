@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class ShowMovie extends Component {
     constructor(props) {
@@ -20,32 +21,60 @@ class ShowMovie extends Component {
         }
     }
 
+    handleInput = (event) => {
+        const { value, name } = event.target;
+        this.setState({ [name]: value })
+        console.log(this.state)
+    }
+
     render() {
-        console.log(this.props.match.params.id);
-        console.log(this.props.movies);
-        console.log(this.state.movie);
         return (
             <div className="">
                 <h2>{this.state.movie.title ? this.state.movie.title : 'cats'}</h2>
                 <p><a href="this.state.movie.url">Visit imdb page</a></p>
-                <form>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                }}>
                     <div className="form-group">
                         <label>Movie title</label>
-                        <input type="text" value={this.state.movie.title} />
+                        <input
+                            type="text"
+                            onChange={(e) => this.handleInput(e)}
+                            defaultValue={this.state.movie.title}
+                        />
                     </div>
                     <div className="form-group">
                         <label>Year</label>
-                        <input type="text" value={this.state.movie.year} />
+                        <input
+                            type="text"
+                            onChange={(e) => this.handleInput(e)}
+                            defaultValue={this.state.movie.year}
+                        />
                     </div>
                     <div className="form-group">
                         <label>Director</label>
-                        <input type="text" value={this.state.movie.director} />
+                        <input
+                            type="text"
+                            onChange={(e) => this.handleInput(e)}
+                            defaultValue={this.state.movie.director}
+                        />
                     </div>
                     <div className="form-group">
                         <label>Rating</label>
-                        <input type="text" value={this.state.movie.rating} />
+                        <input
+                            type="text"
+                            onChange={(e) => this.handleInput(e)}
+                            defaultValue={this.state.movie.rating}
+                        />
                     </div>
-                    <button className="btn btn-primary" type="submit">Edit Movie</button>
+                    <Link to="/">
+                        <button
+                            className="btn btn-primary"
+                            type="submit"
+                            onClick={() => this.props.editMovie(this.state.movie.id, this.state.movie)}>
+                            Edit Movie
+                        </button>
+                    </Link>
                 </form>
             </div>
         )
