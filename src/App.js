@@ -36,7 +36,7 @@ class App extends Component {
   //ajax call
   async componentDidMount() {
     const proxy = '';
-    const response = await fetch('http://localhost:3001/')
+    const response = await fetch('https://movies-crud-backend.herokuapp.com/')
     const json = await response.json();
     this.setState({ movies: json })
     console.log(this.state.movies)
@@ -58,7 +58,7 @@ class App extends Component {
       url: this.state.url
     }
     console.log(item)
-    fetch('http://localhost:3001/', {
+    fetch('https://movies-crud-backend.herokuapp.com/', {
       method: 'POST',
       body: JSON.stringify(item),
       headers: {
@@ -80,7 +80,7 @@ class App extends Component {
   //Need put and create routes still
   //Delete Route
   deleteMovie = (id) => {
-    fetch(`http://localhost:3001/${id}`, {
+    fetch(`https://movies-crud-backend.herokuapp.com/${id}`, {
       method: 'DELETE'
     })
       .then(response => response.json())
@@ -100,7 +100,7 @@ class App extends Component {
 
   editMovie(id, body) {
     console.log(body)
-    fetch(`http://localhost:3001/${id}`, {
+    fetch(`https://movies-crud-backend.herokuapp.com/${id}`, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {
